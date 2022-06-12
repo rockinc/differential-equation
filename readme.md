@@ -6,6 +6,7 @@ explanations are in the `pdf`,
 and our library will be in `differential_equation`.
 
 ## Numerical methods
+* Euler methods
 
 ## Analytical methods
 
