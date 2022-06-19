@@ -62,5 +62,10 @@ def sin(x):
 def cos(x):
     return np.cos(x)
 
-print(simpson_integral(mode=2,x1=-100,x2=100,dev=1001,func=gauss)) #sqrt(pi)
-print(simpson_integral(mode=2,x1=0,x2=np.pi,dev=100001,func=cos)) #0
+x1=0;x2=np.pi/2
+x = np.linspace(x1,x2,12)
+array_sin = sin(x)
+array_gauss = gauss(x)
+
+print(simpson_integral(array_sin,0,x1,x2)) #sqrt(pi)
+print(simpson_integral(array_gauss,3,x1,x2)) #0
