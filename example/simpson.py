@@ -4,19 +4,50 @@ Simpson method is for calculating integrals
 
 import numpy as np
 
-def simpson_integral(mode,x1,x2,dev,func):
-    xlist = np.linspace(x1,x2,dev)
-    dx = (x2-x1)/dev
+def simpson_integral(array,mode:int,x1:float,x2:float)->float:
+    dx = (x2-x1)/(len(array)-1)
     area = 0
     if mode==0:
-        for i in range(dev):
-            area += func(xlist[i])*dx
+        area = np.sum(array)*dx
     elif mode==1:
-        for i in range(dev-1):
-            area += (func(xlist[i])+func(xlist[i+1]))*dx/2
+        for i in range(len(array)-1):
+            area += (array[i]+array[i+1]) *dx/2
     elif mode==2:
-        for i in range(dev-2):
-            area += (func(xlist[i])+4*func(xlist[i])+func(xlist[i+2]))*dx/6
+        if len(array)>=3:
+            list_coeff = [3-(-1)**i for i in range(len(array))]
+            if len(array)%2==1:
+                list_coeff[0],list_coeff[-1] = 1,1
+            else:
+                list_coeff[0],list_coeff[-2],list_coeff[-1] = 1,2.5,1.5
+        elif len(array)==2:
+            list_coeff = [1.5,1.5]
+        elif len(array)==1:
+            list_coeff = [3]
+        else:
+            raise(NotImplementedError)
+        array_coeff = np.array(list_coeff)
+        area = np.sum(array_coeff*array)*dx*2/6
+    elif mode==3:
+        unit = [2,3,3]
+        if len(array)>=4:
+            list_coeff = unit*((len(array)-1)//3)
+            list_coeff[0]=1
+            if len(array)%3==1:
+                list_coeff+=[1]
+            elif len(array)%3==2:
+                list_coeff+=[7/3,4/3]
+            else:
+                list_coeff+=[17/9,32/9,8/9]
+        elif len(array)==1:
+            list_coeff = [8/3]
+        elif len(array)==2:
+            list_coeff = [4/3,4/3]
+        elif len(array)==3:
+            list_coeff = [8/9,32/9,8/9]
+        else:
+            raise(NotImplementedError)
+        array_coeff = np.array(list_coeff)
+        area = np.sum(array_coeff*array)*dx*3/8
     else:
         raise(NotImplementedError)
     return area
