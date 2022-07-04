@@ -31,5 +31,6 @@ K15 : H -> eaqm + Hp
 K16 : eaqm + Hp -> H
 K17 : OH + OHm -> Om + H2O
 K18 : Om + H2O -> OH + OHm
-
 """
+K7 = 1.4*10**11
+K8 = K7*K2
